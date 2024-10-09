@@ -1,6 +1,8 @@
 # Sistema-de-Estacionamento
 
-## Objetivos e Principais Features
+## Primeira Tarefa
+
+### Objetivos e Principais Features
 Nosso sistema visa a implementar um software que poderia ser usado por um estacionamento a fim de organizar o fluxo de carros presentes.
 
 Algumas features sugeridas:
@@ -12,10 +14,42 @@ Algumas features sugeridas:
 6. verificar quantidade de vezes em que um cliente já frequentou o sistema;
 7. aplicar desconto segundo plano de fidelidade.
 
-## Membros da Equipe e Papéis no Sistema
+### Membros da Equipe e Papéis no Sistema
 1. Arthur Felipe Ferreira 2019070000 (frontend)
 2. João Guilherme Marcondes de Souza Costa 2019027636 (full)
 3. Júlia Paes de Viterbo 2021032137 (backend)
 
-## Tecnologias
+### Tecnologias
 O grupo pretende desenvolver o sistema por meio da linguagem Python e de ferramentas de Bancos de Dados.
+
+## Backlog do Produto
+Nosso sistema é voltado apenas para os funcionários do estacionamento.
+
+Seguem as histórias de usuário:
+1. como funcionário, eu gostaria de cadastrar uma placa de um veículo nova;
+2. como funcionário, eu gostaria de consultar a disponibilidade de vagas não ocupadas no momento atual;
+3. como funcionário, eu gostaria de saber os números identificadores das vagas disponíveis;
+4. como funcionário, eu gostaria de, dado o número de uma vaga, saber a localização dela dentro do estacionamento;
+5. como funcionário, eu gostaria de, dado o número de uma placa, localizar o veículo ao qual ela pertence dentro do estacionamento;
+6. como funcionário, eu gostaria de, dado o número de uma placa, consultar o tempo de permanência do veículo no estacionamento e gerar um saldo a ser pago;
+7. como funcionário, eu gostaria de dar baixa de uma placa e desalocar uma vaga ocupada quando um veículo se retira do estacionamento;
+8. como funcionário, eu gostaria de verificar quantidade de vezes em que um cliente já frequentou o sistema;
+9. como funcionário, eu gostaria de cadastrar um cliente no plano de fidelidade elegível para ele;
+10. como funcionário, eu gostaria de aplicar desconto sobre o saldo a ser pago caso o cliente seja membro do clube de fidelidade do estacionamento;
+
+## Backlog do Sprint
+
+### Historia #1: 
+
+#### Tarefas e responsáveis:
+1. 
+
+### Historia #2: 
+
+#### Tarefas e responsáveis:
+1. 
+
+### Historia #3: 
+
+#### Tarefas e responsáveis:
+1. 
