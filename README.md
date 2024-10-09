@@ -32,10 +32,11 @@ Seguem as histórias de usuário:
 4. como funcionário, eu gostaria de, dado o número de uma vaga, saber a localização dela dentro do estacionamento;
 5. como funcionário, eu gostaria de, dado o número de uma placa, localizar o veículo ao qual ela pertence dentro do estacionamento;
 6. como funcionário, eu gostaria de, dado o número de uma placa, consultar o tempo de permanência do veículo no estacionamento e gerar um saldo a ser pago;
-7. como funcionário, eu gostaria de dar baixa de uma placa e desalocar uma vaga ocupada quando um veículo se retira do estacionamento;
+7. como funcionário, eu gostaria de, dado o número de uma placa, dar baixa no veículo e desalocar a vaga ocupada por ele no estacionamento;
 8. como funcionário, eu gostaria de verificar quantidade de vezes em que um cliente já frequentou o sistema;
 9. como funcionário, eu gostaria de cadastrar um cliente no plano de fidelidade elegível para ele;
 10. como funcionário, eu gostaria de aplicar desconto sobre o saldo a ser pago caso o cliente seja membro do clube de fidelidade do estacionamento;
+11. como funcionário, eu gostaria de consultar os planos de fidelidade do estacionamento.
 
 ## Backlog do Sprint
 
