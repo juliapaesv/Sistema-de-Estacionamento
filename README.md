@@ -40,10 +40,15 @@ Seguem as histórias de usuário:
 
 ## Backlog do Sprint
 
-### Historia #1: 
+### Historia #1: Como funcionário, eu gostaria de, dado o número de uma placa, consultar o tempo de permanência do veículo no estacionamento e gerar um saldo a ser pago.
 
 #### Tarefas e responsáveis:
-1. 
+1. Criar o banco de dados e as tabelas necessárias usando SQLite e Python [Arthur Felipe Pereira]
+2. Desenvolver uma API simples usando Flask para gerenciar as consultas de placas [Arthur Felipe Sampaio]
+3. Implementar a lógica para calcular o tempo de permanência do veículo no estacionamento [Arthur Felipe Nonato]
+4. Desenvolver uma interface gráfica simples com Tkinter para consulta de placas [Arthur Felipe Fernandes]
+5. Implementar a função para calcular o saldo a ser pago com base no tempo de permanência [Arthur Felipe Oliveira]
+6. Integrar a API Flask com a interface gráfica para mostrar o tempo de permanência e o saldo [Arthur Felipe Almeida]
 
 ### Historia #2: 
 
