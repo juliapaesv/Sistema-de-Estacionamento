@@ -44,25 +44,25 @@ Seguem as histórias de usuário:
 
 #### Tarefas e responsáveis:
 1. Criar o banco de dados e as tabelas necessárias usando SQLite e Python [Júlia Paes de Viterbo]
-2. Desenvolver uma API simples usando Flask para gerenciar as consultas de placas e vagas correspondentes [Arthur Felipe Sampaio]
+2. Desenvolver uma API simples usando Flask para gerenciar as consultas de placas e vagas correspondentes [João Guilherme Marcondes de Souza Costa]
 3. Implementar a lógica para verificar quais vagas existentes não estão ocupadas no momento atual [Júlia Paes de Viterbo]
-4. Desenvolver uma interface gráfica simples com Tkinter para consulta de vagas [Arthur Felipe Fernandes]
-5. Integrar a API Flask com a interface gráfica para mostrar as vagas disponíveis [Arthur Felipe Almeida]
+4. Desenvolver uma interface gráfica simples com Tkinter para consulta de vagas [Arthur Felipe Ferreira]
+5. Integrar a API Flask com a interface gráfica para mostrar as vagas disponíveis [Arthur Felipe Ferreira]
 
 ### Historia #2: Como funcionário, eu gostaria de, dado o número de uma placa, consultar o tempo de permanência do veículo no estacionamento e gerar um saldo a ser pago
 
 #### Tarefas e responsáveis:
 1. Criar o banco de dados e as tabelas necessárias usando SQLite e Python [Júlia Paes de Viterbo]
-2. Desenvolver uma API simples usando Flask para gerenciar as consultas de placas [Arthur Felipe Sampaio]
+2. Desenvolver uma API simples usando Flask para gerenciar as consultas de placas [João Guilherme Marcondes de Souza Costa]
 3. Implementar a lógica para calcular o tempo de permanência do veículo no estacionamento [Júlia Paes de Viterbo]
-4. Desenvolver uma interface gráfica simples com Tkinter para consulta de placas [Arthur Felipe Fernandes]
+4. Desenvolver uma interface gráfica simples com Tkinter para consulta de placas [Arthur Felipe Ferreira]
 5. Implementar a função para calcular o saldo a ser pago com base no tempo de permanência [Júlia Paes de Viterbo]
-6. Integrar a API Flask com a interface gráfica para mostrar o tempo de permanência e o saldo [Arthur Felipe Almeida]
+6. Integrar a API Flask com a interface gráfica para mostrar o tempo de permanência e o saldo [Arthur Felipe Ferreira]
 
 ### Historia #3: Como funcionário, eu gostaria de consultar os planos de fidelidade do estacionamento
 
 #### Tarefas e responsáveis:
 1. Criar o banco de dados e as tabelas necessárias para os planos de fidelidade usando SQLite e Python [Júlia Paes de Viterbo]
 2. Desenvolver uma API simples usando Flask para gerenciar os planos de fidelidade disponíveis [João Guilherme Marcondes de Souza Costa]
-3. Desenvolver uma interface gráfica simples com Tkinter para consulta de planos [João Guilherme Marcondes de Souza Costa]
-4. Integrar a API Flask com a interface gráfica para mostrar os planos disponíveis, seus benefícios e prerrequisitos [João Guilherme Marcondes de Souza Costa]
+3. Desenvolver uma interface gráfica simples com Tkinter para consulta de planos [Arthur Felipe Ferreira]
+4. Integrar a API Flask com a interface gráfica para mostrar os planos disponíveis, seus benefícios e prerrequisitos [Arthur Felipe Ferreira]
