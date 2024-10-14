@@ -43,7 +43,7 @@ Seguem as histórias de usuário:
 ### Historia #1: Como funcionário, eu gostaria de cadastrar uma nova placa de um veículo
 
 #### Tarefas e responsáveis:
-1. Criar o banco de dados e as tabelas necessárias usando SQLite e Python [Júlia Paes de Viterbo]
+1. Criar o banco de dados e as tabelas necessárias (tabela de Placas a princípio) usando SQLite e Python [Júlia Paes de Viterbo]
 2. Desenvolver uma API simples usando Flask para gerenciar as consultas de placas cadastradas [João Guilherme Marcondes de Souza Costa]
 3. Implementar a lógica para persistir uma nova linha no banco de dados de forma que a nova placa seja cadastrada [Júlia Paes de Viterbo]
 4. Desenvolver uma interface gráfica simples com Tkinter para consulta de placas cadastradas [Arthur Felipe Ferreira]
@@ -52,7 +52,7 @@ Seguem as histórias de usuário:
 ### Historia #2: Como funcionário, eu gostaria de consultar a disponibilidade de vagas não ocupadas no momento atual
 
 #### Tarefas e responsáveis:
-1. Criar o banco de dados e as tabelas necessárias usando SQLite e Python [Júlia Paes de Viterbo]
+1. Criar novas tabelas necessárias no banco de dados (tabela de Vagas a princípio) usando SQLite e Python [Júlia Paes de Viterbo]
 2. Desenvolver uma API simples usando Flask para gerenciar as consultas de placas e vagas correspondentes [João Guilherme Marcondes de Souza Costa]
 3. Implementar a lógica para verificar quais vagas existentes não estão ocupadas no momento atual [Júlia Paes de Viterbo]
 4. Desenvolver uma interface gráfica simples com Tkinter para consulta de vagas [Arthur Felipe Ferreira]
@@ -61,7 +61,7 @@ Seguem as histórias de usuário:
 ### Historia #3: Como funcionário, eu gostaria de, dado o número de uma placa, consultar o tempo de permanência do veículo no estacionamento e gerar um saldo a ser pago
 
 #### Tarefas e responsáveis:
-1. Criar o banco de dados e as tabelas necessárias usando SQLite e Python [Júlia Paes de Viterbo]
+1. Acessar as tabelas necessárias (tabela de Vagas a princípio) usando SQLite e Python [Júlia Paes de Viterbo]
 2. Desenvolver uma API simples usando Flask para gerenciar as consultas de placas [João Guilherme Marcondes de Souza Costa]
 3. Implementar a lógica para calcular o tempo de permanência do veículo no estacionamento [Júlia Paes de Viterbo]
 4. Desenvolver uma interface gráfica simples com Tkinter para consulta de placas [Arthur Felipe Ferreira]
@@ -71,7 +71,7 @@ Seguem as histórias de usuário:
 ### Historia #4: Como funcionário, eu gostaria de consultar os planos de fidelidade do estacionamento
 
 #### Tarefas e responsáveis:
-1. Criar o banco de dados e as tabelas necessárias para os planos de fidelidade usando SQLite e Python [Júlia Paes de Viterbo]
+1. Criar novas tabelas necessárias para os planos de fidelidade (tabela de Planos a princípio) usando SQLite e Python [Júlia Paes de Viterbo]
 2. Desenvolver uma API simples usando Flask para gerenciar os planos de fidelidade disponíveis [João Guilherme Marcondes de Souza Costa]
 3. Desenvolver uma interface gráfica simples com Tkinter para consulta de planos [Arthur Felipe Ferreira]
 4. Integrar a API Flask com a interface gráfica para mostrar os planos disponíveis, seus benefícios e prerrequisitos [Arthur Felipe Ferreira]
