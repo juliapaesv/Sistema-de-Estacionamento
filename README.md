@@ -26,7 +26,7 @@ O grupo pretende desenvolver o sistema por meio da linguagem Python e de ferrame
 Nosso sistema é voltado apenas para os funcionários do estacionamento.
 
 Seguem as histórias de usuário:
-1. como funcionário, eu gostaria de cadastrar uma placa de um veículo nova;
+1. como funcionário, eu gostaria de cadastrar uma nova placa de um veículo;
 2. como funcionário, eu gostaria de consultar a disponibilidade de vagas não ocupadas no momento atual;
 3. como funcionário, eu gostaria de saber os números identificadores das vagas disponíveis;
 4. como funcionário, eu gostaria de, dado o número de uma vaga, saber a localização dela dentro do estacionamento;
@@ -40,7 +40,16 @@ Seguem as histórias de usuário:
 
 ## Backlog do Sprint
 
-### Historia #1: Como funcionário, eu gostaria de consultar a disponibilidade de vagas não ocupadas no momento atual
+### Historia #1: Como funcionário, eu gostaria de cadastrar uma nova placa de um veículo
+
+#### Tarefas e responsáveis:
+1. Criar o banco de dados e as tabelas necessárias usando SQLite e Python [Júlia Paes de Viterbo]
+2. Desenvolver uma API simples usando Flask para gerenciar as consultas de placas cadastradas [João Guilherme Marcondes de Souza Costa]
+3. Implementar a lógica para persistir uma nova linha no banco de dados de forma que a nova placa seja cadastrada [Júlia Paes de Viterbo]
+4. Desenvolver uma interface gráfica simples com Tkinter para consulta de placas cadastradas [Arthur Felipe Ferreira]
+5. Integrar a API Flask com a interface gráfica para mostrar as placas cadastradas [Arthur Felipe Ferreira]
+
+### Historia #2: Como funcionário, eu gostaria de consultar a disponibilidade de vagas não ocupadas no momento atual
 
 #### Tarefas e responsáveis:
 1. Criar o banco de dados e as tabelas necessárias usando SQLite e Python [Júlia Paes de Viterbo]
@@ -49,7 +58,7 @@ Seguem as histórias de usuário:
 4. Desenvolver uma interface gráfica simples com Tkinter para consulta de vagas [Arthur Felipe Ferreira]
 5. Integrar a API Flask com a interface gráfica para mostrar as vagas disponíveis [Arthur Felipe Ferreira]
 
-### Historia #2: Como funcionário, eu gostaria de, dado o número de uma placa, consultar o tempo de permanência do veículo no estacionamento e gerar um saldo a ser pago
+### Historia #3: Como funcionário, eu gostaria de, dado o número de uma placa, consultar o tempo de permanência do veículo no estacionamento e gerar um saldo a ser pago
 
 #### Tarefas e responsáveis:
 1. Criar o banco de dados e as tabelas necessárias usando SQLite e Python [Júlia Paes de Viterbo]
@@ -59,7 +68,7 @@ Seguem as histórias de usuário:
 5. Implementar a função para calcular o saldo a ser pago com base no tempo de permanência [Júlia Paes de Viterbo]
 6. Integrar a API Flask com a interface gráfica para mostrar o tempo de permanência e o saldo [Arthur Felipe Ferreira]
 
-### Historia #3: Como funcionário, eu gostaria de consultar os planos de fidelidade do estacionamento
+### Historia #4: Como funcionário, eu gostaria de consultar os planos de fidelidade do estacionamento
 
 #### Tarefas e responsáveis:
 1. Criar o banco de dados e as tabelas necessárias para os planos de fidelidade usando SQLite e Python [Júlia Paes de Viterbo]
