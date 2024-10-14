@@ -63,6 +63,6 @@ Seguem as histórias de usuário:
 
 #### Tarefas e responsáveis:
 1. Criar o banco de dados e as tabelas necessárias para os planos de fidelidade usando SQLite e Python [Júlia Paes de Viterbo]
-2. Desenvolver uma API simples usando Flask para gerenciar as consultas de planos [João Guilherme Marcondes de Souza Costa]
+2. Desenvolver uma API simples usando Flask para gerenciar os planos de fidelidade disponíveis [João Guilherme Marcondes de Souza Costa]
 3. Desenvolver uma interface gráfica simples com Tkinter para consulta de planos [João Guilherme Marcondes de Souza Costa]
-4. Integrar a API Flask com a interface gráfica para mostrar os planos disponíveis, seus requisitos e prerrequisitos [João Guilherme Marcondes de Souza Costa]
+4. Integrar a API Flask com a interface gráfica para mostrar os planos disponíveis, seus benefícios e prerrequisitos [João Guilherme Marcondes de Souza Costa]
