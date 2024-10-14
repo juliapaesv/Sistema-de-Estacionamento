@@ -30,7 +30,7 @@ Seguem as histórias de usuário:
 2. como funcionário, eu gostaria de consultar a disponibilidade de vagas não ocupadas no momento atual;
 3. como funcionário, eu gostaria de saber os números identificadores das vagas disponíveis;
 4. como funcionário, eu gostaria de, dado o número de uma vaga, saber a localização dela dentro do estacionamento;
-5. como funcionário, eu gostaria de, dado o número de uma placa, localizar o veículo ao qual ela pertence dentro do estacionamento;
+5. como funcionário, eu gostaria de, dado o número de uma placa, localizar onde está o veículo ao qual ela pertence dentro do estacionamento;
 6. como funcionário, eu gostaria de, dado o número de uma placa, consultar o tempo de permanência do veículo no estacionamento e gerar um saldo a ser pago;
 7. como funcionário, eu gostaria de, dado o número de uma placa, dar baixa no veículo e desalocar a vaga ocupada por ele no estacionamento;
 8. como funcionário, eu gostaria de verificar quantidade de vezes em que um cliente já frequentou o sistema;
@@ -40,22 +40,29 @@ Seguem as histórias de usuário:
 
 ## Backlog do Sprint
 
-### Historia #1: Como funcionário, eu gostaria de, dado o número de uma placa, consultar o tempo de permanência do veículo no estacionamento e gerar um saldo a ser pago.
+### Historia #1: Como funcionário, eu gostaria de consultar a disponibilidade de vagas não ocupadas no momento atual
 
 #### Tarefas e responsáveis:
-1. Criar o banco de dados e as tabelas necessárias usando SQLite e Python [Arthur Felipe Pereira]
+1. Criar o banco de dados e as tabelas necessárias usando SQLite e Python [Júlia Paes de Viterbo]
+2. Desenvolver uma API simples usando Flask para gerenciar as consultas de placas e vagas correspondentes [Arthur Felipe Sampaio]
+3. Implementar a lógica para verificar quais vagas existentes não estão ocupadas no momento atual [Júlia Paes de Viterbo]
+4. Desenvolver uma interface gráfica simples com Tkinter para consulta de vagas [Arthur Felipe Fernandes]
+5. Integrar a API Flask com a interface gráfica para mostrar as vagas disponíveis [Arthur Felipe Almeida]
+
+### Historia #2: Como funcionário, eu gostaria de, dado o número de uma placa, consultar o tempo de permanência do veículo no estacionamento e gerar um saldo a ser pago
+
+#### Tarefas e responsáveis:
+1. Criar o banco de dados e as tabelas necessárias usando SQLite e Python [Júlia Paes de Viterbo]
 2. Desenvolver uma API simples usando Flask para gerenciar as consultas de placas [Arthur Felipe Sampaio]
-3. Implementar a lógica para calcular o tempo de permanência do veículo no estacionamento [Arthur Felipe Nonato]
+3. Implementar a lógica para calcular o tempo de permanência do veículo no estacionamento [Júlia Paes de Viterbo]
 4. Desenvolver uma interface gráfica simples com Tkinter para consulta de placas [Arthur Felipe Fernandes]
-5. Implementar a função para calcular o saldo a ser pago com base no tempo de permanência [Arthur Felipe Oliveira]
+5. Implementar a função para calcular o saldo a ser pago com base no tempo de permanência [Júlia Paes de Viterbo]
 6. Integrar a API Flask com a interface gráfica para mostrar o tempo de permanência e o saldo [Arthur Felipe Almeida]
 
-### Historia #2: 
+### Historia #3: Como funcionário, eu gostaria de consultar os planos de fidelidade do estacionamento
 
 #### Tarefas e responsáveis:
-1. 
-
-### Historia #3: 
-
-#### Tarefas e responsáveis:
-1. 
+1. Criar o banco de dados e as tabelas necessárias para os planos de fidelidade usando SQLite e Python [Júlia Paes de Viterbo]
+2. Desenvolver uma API simples usando Flask para gerenciar as consultas de planos [João Guilherme Marcondes de Souza Costa]
+3. Desenvolver uma interface gráfica simples com Tkinter para consulta de planos [João Guilherme Marcondes de Souza Costa]
+4. Integrar a API Flask com a interface gráfica para mostrar os planos disponíveis, seus requisitos e prerrequisitos [João Guilherme Marcondes de Souza Costa]
