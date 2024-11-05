@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk
 import requests
 
 # Funções de consulta e cadastro
@@ -9,65 +9,75 @@ def consultar_placas():
         response = requests.get("http://127.0.0.1:5000/placas")  # Verifique a rota correta na API
         if response.status_code == 200:
             placas = response.json()
-            messagebox.showinfo("Placas Cadastradas", "\n".join(placas))
+            resultado_text.delete(1.0, tk.END)  # Limpa o conteúdo do Text antes de adicionar novos resultados
+            resultado_text.insert(tk.END, "\n".join(placas))  # Insere as placas no Text
         else:
-            messagebox.showerror("Erro", "Não foi possível buscar as placas.")
+            resultado_text.delete(1.0, tk.END)
+            resultado_text.insert(tk.END, "Erro: Não foi possível buscar as placas.")
     except Exception as e:
-        messagebox.showerror("Erro de Conexão", str(e))
+        resultado_text.delete(1.0, tk.END)
+        resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
 
 def cadastrar_placa(placa):
     try:
         response = requests.post("http://127.0.0.1:5000/cadastrar_placa", json={"placa": placa})
         if response.status_code == 201:
-            messagebox.showinfo("Sucesso", "Placa cadastrada com sucesso!")
+            resultado_text.delete(1.0, tk.END)
+            resultado_text.insert(tk.END, "Placa cadastrada com sucesso!")
         else:
-            messagebox.showerror("Erro", "Não foi possível cadastrar a placa.")
+            resultado_text.delete(1.0, tk.END)
+            resultado_text.insert(tk.END, "Erro: Não foi possível cadastrar a placa.")
     except Exception as e:
-        messagebox.showerror("Erro de Conexão", str(e))
+        resultado_text.delete(1.0, tk.END)
+        resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
 
 def consultar_vagas_disponiveis():
     try:
         response = requests.get("http://127.0.0.1:5000/vagas_disponiveis")
         if response.status_code == 200:
             vagas = response.json()
-            messagebox.showinfo("Vagas Disponíveis", str(vagas))  # Ajuste na exibição da quantidade
+            resultado_text.delete(1.0, tk.END)
+            resultado_text.insert(tk.END, str(vagas))
         else:
-            messagebox.showerror("Erro", "Não foi possível buscar as vagas.")
+            resultado_text.delete(1.0, tk.END)
+            resultado_text.insert(tk.END, "Erro: Não foi possível buscar as vagas.")
     except Exception as e:
-        messagebox.showerror("Erro de Conexão", str(e))
+        resultado_text.delete(1.0, tk.END)
+        resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
 
 def consultar_permanencia_saldo(placa):
     try:
-        response = requests.get(f"http://127.0.0.1:5000/tempo_e_saldo/{placa}")  # URL ajustada
+        response = requests.get(f"http://127.0.0.1:5000/tempo_e_saldo/{placa}")
         if response.status_code == 200:
             dados = response.json()
-            permanencia = dados.get("data_entrada")  # Ajuste de chave para exibir a data de entrada
+            permanencia = dados.get("data_entrada")
+            permanencia1 = dados.get("data_saida")
             saldo = dados.get("saldo")
-            messagebox.showinfo("Tempo e Saldo", f"Tempo: {permanencia}\nSaldo: {saldo}")
+            resultado_text.delete(1.0, tk.END)
+            resultado_text.insert(tk.END, f"Hora de Entrada: {permanencia}\n Hora de saida: {permanencia1}\nSaldo: {saldo}")
         else:
-            messagebox.showerror("Erro", "Não foi possível buscar os dados.")
+            resultado_text.delete(1.0, tk.END)
+            resultado_text.insert(tk.END, "Erro: Não foi possível buscar os dados.")
     except Exception as e:
-        messagebox.showerror("Erro de Conexão", str(e))
+        resultado_text.delete(1.0, tk.END)
+        resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
 
 def consultar_planos_fidelidade():
-    # Planos mockados
     planos = [
         {"nome": "Estacionamento na Veia - Forte e vingador", "beneficios": "Acesso ilimitado, estacionamento reservado, descontos exclusivos", "requisitos": "Pagamento mensal de R$ 200,00"},
         {"nome": "Estacionamento na Veia - Preto", "beneficios": "Acesso a vagas preferenciais, descontos em estacionamentos parceiros", "requisitos": "Pagamento mensal de R$ 120,00"},
         {"nome": "Estacionamento na Veia - Prata", "beneficios": "Descontos em estacionamentos parceiros", "requisitos": "Pagamento mensal de R$ 60,00"}
     ]
     
-    # Gerando as informações para exibir
     planos_info = "\n".join([f"Plano: {p['nome']} - Benefícios: {p['beneficios']} - Requisitos: {p['requisitos']}" for p in planos])
     
-    # Exibindo a informação dos planos
-    messagebox.showinfo("Planos de Fidelidade", planos_info)
-
+    resultado_text.delete(1.0, tk.END)
+    resultado_text.insert(tk.END, planos_info)
 
 # Configuração da interface principal com abas
 root = tk.Tk()
 root.title("Gerenciador do Estacionamento")
-root.geometry("500x300")  # Define o tamanho da janela para 500x300
+root.geometry("600x400")  # Tamanho da janela ajustado
 
 notebook = ttk.Notebook(root)
 notebook.pack(expand=True, fill="both")
@@ -106,5 +116,16 @@ frame_planos = ttk.Frame(notebook)
 notebook.add(frame_planos, text="Consulta de Planos")
 btn_consultar_planos = tk.Button(frame_planos, text="Consultar Planos de Fidelidade", command=consultar_planos_fidelidade)
 btn_consultar_planos.pack(pady=10)
+
+# Widget de texto com rolagem para exibir resultados
+resultado_text_frame = ttk.Frame(root)
+resultado_text_frame.pack(fill="both", expand=True, padx=10, pady=10)
+
+resultado_text = tk.Text(resultado_text_frame, wrap=tk.WORD, height=10)
+resultado_text.pack(expand=True, fill="both", padx=5, pady=5)
+
+scrollbar = tk.Scrollbar(resultado_text_frame, command=resultado_text.yview)
+scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+resultado_text.config(yscrollcommand=scrollbar.set)
 
 root.mainloop()
