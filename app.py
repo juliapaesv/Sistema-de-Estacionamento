@@ -94,6 +94,21 @@ def planos():
     conn.close()
     return jsonify(planos)
 
+# Rota para consultar todas as placas
+@app.route('/placas', methods=['GET'])
+def consultar_placas():
+    conn = sqlite3.connect('estacionamento.db')
+    cursor = conn.cursor()
+    
+    # Seleciona todas as placas cadastradas
+    cursor.execute("SELECT placa FROM Placas")
+    placas = cursor.fetchall()
+    conn.close()
+    
+    # Retorna as placas em formato JSON
+    return jsonify([placa[0] for placa in placas])  # Retorna apenas a coluna "placa"
+
+
 if __name__ == '__main__':
     inicializar_vagas()
     app.run(debug=True)
