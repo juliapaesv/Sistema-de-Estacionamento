@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 import requests
 
 # Funções de consulta e cadastro
@@ -9,32 +9,32 @@ def consultar_placas():
         response = requests.get("http://127.0.0.1:5000/placas")  # Verifique a rota correta na API
         if response.status_code == 200:
             placas = response.json()
-            lbl_resultado.config(text="\n".join(placas))  # Exibe as placas na mesma janela
+            messagebox.showinfo("Placas Cadastradas", "\n".join(placas))
         else:
-            lbl_resultado.config(text="Não foi possível buscar as placas.")  # Exibe o erro na mesma janela
+            messagebox.showerror("Erro", "Não foi possível buscar as placas.")
     except Exception as e:
-        lbl_resultado.config(text="Erro de Conexão: " + str(e))  # Exibe erro de conexão na mesma janela
+        messagebox.showerror("Erro de Conexão", str(e))
 
 def cadastrar_placa(placa):
     try:
         response = requests.post("http://127.0.0.1:5000/cadastrar_placa", json={"placa": placa})
         if response.status_code == 201:
-            lbl_resultado.config(text="Placa cadastrada com sucesso!")  # Exibe sucesso na mesma janela
+            messagebox.showinfo("Sucesso", "Placa cadastrada com sucesso!")
         else:
-            lbl_resultado.config(text="Não foi possível cadastrar a placa.")  # Exibe erro na mesma janela
+            messagebox.showerror("Erro", "Não foi possível cadastrar a placa.")
     except Exception as e:
-        lbl_resultado.config(text="Erro de Conexão: " + str(e))  # Exibe erro de conexão na mesma janela
+        messagebox.showerror("Erro de Conexão", str(e))
 
 def consultar_vagas_disponiveis():
     try:
         response = requests.get("http://127.0.0.1:5000/vagas_disponiveis")
         if response.status_code == 200:
             vagas = response.json()
-            lbl_resultado.config(text=str(vagas))  # Exibe as vagas na mesma janela
+            messagebox.showinfo("Vagas Disponíveis", str(vagas))  # Ajuste na exibição da quantidade
         else:
-            lbl_resultado.config(text="Não foi possível buscar as vagas.")  # Exibe erro na mesma janela
+            messagebox.showerror("Erro", "Não foi possível buscar as vagas.")
     except Exception as e:
-        lbl_resultado.config(text="Erro de Conexão: " + str(e))  # Exibe erro de conexão na mesma janela
+        messagebox.showerror("Erro de Conexão", str(e))
 
 def consultar_permanencia_saldo(placa):
     try:
@@ -43,16 +43,16 @@ def consultar_permanencia_saldo(placa):
             dados = response.json()
             permanencia = dados.get("data_entrada")  # Ajuste de chave para exibir a data de entrada
             saldo = dados.get("saldo")
-            lbl_resultado.config(text=f"Tempo: {permanencia}\nSaldo: {saldo}")  # Exibe dados na mesma janela
+            messagebox.showinfo("Tempo e Saldo", f"Tempo: {permanencia}\nSaldo: {saldo}")
         else:
-            lbl_resultado.config(text="Não foi possível buscar os dados.")  # Exibe erro na mesma janela
+            messagebox.showerror("Erro", "Não foi possível buscar os dados.")
     except Exception as e:
-        lbl_resultado.config(text="Erro de Conexão: " + str(e))  # Exibe erro de conexão na mesma janela
+        messagebox.showerror("Erro de Conexão", str(e))
 
 def consultar_planos_fidelidade():
     # Planos mockados
     planos = [
-        {"nome": "Estacionamento na Veia - Forte e Vingador", "beneficios": "Acesso ilimitado, estacionamento reservado, descontos exclusivos", "requisitos": "Pagamento mensal de R$ 200,00"},
+        {"nome": "Estacionamento na Veia - Forte e vingador", "beneficios": "Acesso ilimitado, estacionamento reservado, descontos exclusivos", "requisitos": "Pagamento mensal de R$ 200,00"},
         {"nome": "Estacionamento na Veia - Preto", "beneficios": "Acesso a vagas preferenciais, descontos em estacionamentos parceiros", "requisitos": "Pagamento mensal de R$ 120,00"},
         {"nome": "Estacionamento na Veia - Prata", "beneficios": "Descontos em estacionamentos parceiros", "requisitos": "Pagamento mensal de R$ 60,00"}
     ]
@@ -60,8 +60,8 @@ def consultar_planos_fidelidade():
     # Gerando as informações para exibir
     planos_info = "\n".join([f"Plano: {p['nome']} - Benefícios: {p['beneficios']} - Requisitos: {p['requisitos']}" for p in planos])
     
-    # Exibindo a informação dos planos na mesma janela
-    lbl_resultado.config(text=planos_info)
+    # Exibindo a informação dos planos
+    messagebox.showinfo("Planos de Fidelidade", planos_info)
 
 
 # Configuração da interface principal com abas
@@ -106,9 +106,5 @@ frame_planos = ttk.Frame(notebook)
 notebook.add(frame_planos, text="Consulta de Planos")
 btn_consultar_planos = tk.Button(frame_planos, text="Consultar Planos de Fidelidade", command=consultar_planos_fidelidade)
 btn_consultar_planos.pack(pady=10)
-
-# Label para mostrar os resultados
-lbl_resultado = tk.Label(frame_planos, text="", justify=tk.LEFT, anchor="w", font=("Arial", 10))
-lbl_resultado.pack(pady=10, padx=10)
 
 root.mainloop()
