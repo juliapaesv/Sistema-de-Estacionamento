@@ -69,7 +69,9 @@ def consultar_planos_fidelidade():
         {"nome": "Estacionamento na Veia - Prata", "beneficios": "Descontos em estacionamentos parceiros", "requisitos": "Pagamento mensal de R$ 60,00"}
     ]
     
-    planos_info = "\n".join([f"Plano: {p['nome']} - Benefícios: {p['beneficios']} - Requisitos: {p['requisitos']}" for p in planos])
+    # Adiciona uma linha em branco entre cada plano
+    planos_info = "\n\n".join([f"Plano: {p['nome']} - Benefícios: {p['beneficios']} - Requisitos: {p['requisitos']}" for p in planos])
+
     
     resultado_text.delete(1.0, tk.END)
     resultado_text.insert(tk.END, planos_info)
