@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import requests
 
-# Funções de consulta para cada história
+# Funções de consulta e cadastro
 
 def consultar_placas():
     try:
@@ -12,6 +12,16 @@ def consultar_placas():
             messagebox.showinfo("Placas Cadastradas", "\n".join(placas))
         else:
             messagebox.showerror("Erro", "Não foi possível buscar as placas.")
+    except Exception as e:
+        messagebox.showerror("Erro de Conexão", str(e))
+
+def cadastrar_placa(placa):
+    try:
+        response = requests.post("http://127.0.0.1:5000/cadastrar_placa", json={"placa": placa})
+        if response.status_code == 201:
+            messagebox.showinfo("Sucesso", "Placa cadastrada com sucesso!")
+        else:
+            messagebox.showerror("Erro", "Não foi possível cadastrar a placa.")
     except Exception as e:
         messagebox.showerror("Erro de Conexão", str(e))
 
@@ -54,14 +64,23 @@ def consultar_planos_fidelidade():
 # Configuração da interface principal com abas
 root = tk.Tk()
 root.title("Gerenciador do Estacionamento")
+root.geometry("500x300")  # Define o tamanho da janela para 500x300
+
 notebook = ttk.Notebook(root)
 notebook.pack(expand=True, fill="both")
 
-# Aba para Consulta de Placas (História 1)
+# Aba para Consulta e Cadastro de Placas (História 1)
 frame_placas = ttk.Frame(notebook)
-notebook.add(frame_placas, text="Consulta de Placas")
+notebook.add(frame_placas, text="Consulta e Cadastro de Placas")
+
 btn_consultar_placas = tk.Button(frame_placas, text="Consultar Placas", command=consultar_placas)
 btn_consultar_placas.pack(pady=10)
+
+tk.Label(frame_placas, text="Nova Placa:").pack(pady=5)
+entry_nova_placa = tk.Entry(frame_placas)
+entry_nova_placa.pack(pady=5)
+btn_cadastrar_placa = tk.Button(frame_placas, text="Cadastrar Placa", command=lambda: cadastrar_placa(entry_nova_placa.get()))
+btn_cadastrar_placa.pack(pady=10)
 
 # Aba para Consulta de Vagas Disponíveis (História 2)
 frame_vagas = ttk.Frame(notebook)
