@@ -4,7 +4,7 @@ import requests
 from datetime import datetime
 
 # Funções de consulta e cadastro
-
+#Define a Função de Consultar Placas
 def consultar_placas():
     try:
         response = requests.get("http://127.0.0.1:5000/placas")  # Verifique a rota correta na API
@@ -18,7 +18,8 @@ def consultar_placas():
     except Exception as e:
         resultado_text.delete(1.0, tk.END)
         resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
-
+        
+#Define a Função de Cadastrar Placas
 def cadastrar_placa(placa):
     tempo = datetime.now().strftime('%Y-%m-%d %H:%M:%S') 
     try:
@@ -32,7 +33,8 @@ def cadastrar_placa(placa):
     except Exception as e:
         resultado_text.delete(1.0, tk.END)
         resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
-
+        
+#Define a Função de Consultar Vagas
 def consultar_vagas_disponiveis():
     try:
         response = requests.get("http://127.0.0.1:5000/vagas_disponiveis")
@@ -48,7 +50,8 @@ def consultar_vagas_disponiveis():
     except Exception as e:
         resultado_text.delete(1.0, tk.END)
         resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
-
+        
+#Define a Função de Consultar Saldo
 def consultar_permanencia_saldo(placa):
     try:
         response = requests.get(f"http://127.0.0.1:5000/tempo_e_saldo/{placa}")
@@ -65,7 +68,8 @@ def consultar_permanencia_saldo(placa):
     except Exception as e:
         resultado_text.delete(1.0, tk.END)
         resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
-
+        
+#Define a Função de Consultar Planos
 def consultar_planos_fidelidade():
     planos = [
         {"nome": "Estacionamento na Veia - Forte e vingador", "beneficios": "Acesso ilimitado, estacionamento reservado, descontos exclusivos", "requisitos": "Pagamento mensal de R$ 200,00"},
