@@ -77,8 +77,12 @@ Seguem as histórias de usuário:
 4. Integrar a API Flask com a interface gráfica para mostrar os planos disponíveis, seus benefícios e prerrequisitos [Arthur Felipe Ferreira]
 
 ## Diagramas UML
+### Diagrama de Casos de Uso
 
 ![Diagrama de Casos de Uso](diagrams/usecase-diagram.png)
+
+### Diagrama de Classes
+
 ![Diagrama de Classes](diagrams/class-diagram.png)
 
 
