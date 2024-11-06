@@ -75,3 +75,69 @@ Seguem as histórias de usuário:
 2. Desenvolver uma API simples usando Flask para gerenciar os planos de fidelidade disponíveis [João Guilherme Marcondes de Souza Costa]
 3. Desenvolver uma interface gráfica simples com Tkinter para consulta de planos [Arthur Felipe Ferreira]
 4. Integrar a API Flask com a interface gráfica para mostrar os planos disponíveis, seus benefícios e prerrequisitos [Arthur Felipe Ferreira]
+
+## Diagramas UML
+
+%% Diagrama de Casos de Uso para as Histórias de Usuário
+actor Funcionario
+
+usecase "Cadastrar Placa de Veículo" as UC1
+usecase "Consultar Placas Cadastradas" as UC2
+usecase "Consultar Vagas Disponíveis" as UC3
+usecase "Consultar Tempo de Permanência e Saldo" as UC4
+usecase "Consultar Planos de Fidelidade" as UC5
+
+Funcionario --> UC1
+Funcionario --> UC2
+Funcionario --> UC3
+Funcionario --> UC4
+Funcionario --> UC5
+
+%% Diagrama de Classes para as Histórias de Usuário
+classDiagram
+    class API {
+        +consultarPlacas() : Lista<Placa>
+        +cadastrarPlaca(placa: Placa)
+        +consultarVagas() : Lista<Vaga>
+        +consultarPermanencia(placa: Placa) : Permanencia
+        +consultarPlanos() : Lista<PlanoFidelidade>
+    }
+
+    class Placa {
+        +id : int
+        +numero : string
+    }
+
+    class Vaga {
+        +id : int
+        +disponivel : bool
+    }
+
+    class Permanencia {
+        +tempo : int
+        +saldo : float
+    }
+
+    class PlanoFidelidade {
+        +nome : string
+        +beneficios : string
+        +requisitos : string
+    }
+
+    class Database {
+        +conectar()
+        +executarConsulta(query: string)
+        +salvar(placa: Placa)
+        +salvar(vaga: Vaga)
+        +salvar(plano: PlanoFidelidade)
+    }
+
+    API --> Placa : consulta
+    API --> Vaga : consulta
+    API --> Permanencia : calcula
+    API --> PlanoFidelidade : consulta
+    API --> Database : usa
+    Database --> Placa : salva
+    Database --> Vaga : salva
+    Database --> PlanoFidelidade : salva
+
