@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import requests
+from datetime import datetime
 
 # Funções de consulta e cadastro
 
@@ -19,11 +20,12 @@ def consultar_placas():
         resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
 
 def cadastrar_placa(placa):
+    tempo = datetime.now().strftime('%Y-%m-%d %H:%M:%S') 
     try:
         response = requests.post("http://127.0.0.1:5000/cadastrar_placa", json={"placa": placa})
         if response.status_code == 201:
             resultado_text.delete(1.0, tk.END)
-            resultado_text.insert(tk.END, "Placa cadastrada com sucesso!")
+            resultado_text.insert(tk.END, f"{tempo} - Placa cadastrada com sucesso!")
         else:
             resultado_text.delete(1.0, tk.END)
             resultado_text.insert(tk.END, "Erro: Não foi possível cadastrar a placa.")
@@ -36,8 +38,10 @@ def consultar_vagas_disponiveis():
         response = requests.get("http://127.0.0.1:5000/vagas_disponiveis")
         if response.status_code == 200:
             vagas = response.json()
+            vagas_ocupadas = 1000 - vagas
             resultado_text.delete(1.0, tk.END)
-            resultado_text.insert(tk.END, str(vagas))
+            resultado_text.insert(tk.END, f'Vagas Disponíveis: {vagas}')
+            resultado_text.insert(tk.END, f"\nVagas Ocupadas: {vagas_ocupadas}")
         else:
             resultado_text.delete(1.0, tk.END)
             resultado_text.insert(tk.END, "Erro: Não foi possível buscar as vagas.")
@@ -79,7 +83,7 @@ def consultar_planos_fidelidade():
 # Configuração da interface principal com abas
 root = tk.Tk()
 root.title("Gerenciador do Estacionamento")
-root.geometry("600x400")  # Tamanho da janela ajustado
+root.geometry("800x600")  # Tamanho da janela ajustado
 
 notebook = ttk.Notebook(root)
 notebook.pack(expand=True, fill="both")
