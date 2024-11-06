@@ -85,4 +85,6 @@ Seguem as histórias de usuário:
 
 ![Diagrama de Classes](diagrams/class-diagram.png)
 
+## Contributors GitHub
 
+![Contributors](diagrams/contributors.png)
