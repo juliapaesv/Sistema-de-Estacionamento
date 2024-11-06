@@ -1,131 +1,136 @@
-import tkinter as tk
-from tkinter import ttk
-import requests
+from flask import Flask, request, jsonify
+import sqlite3
+from datetime import datetime
 
-# Funções de consulta e cadastro
+app = Flask(__name__)
 
+def inicializar_vagas():
+    conn = sqlite3.connect('estacionamento.db')
+    cursor = conn.cursor()
+
+    # Limpa todas as placas cadastradas
+    cursor.execute("DELETE FROM Placas")
+
+    # Exclui todas as vagas existentes
+    cursor.execute("DELETE FROM Vagas")
+
+    # Cria 1000 vagas com números sequenciais e marca como desocupadas (ocupada = 0)
+    for numero_vaga in range(1, 1001):
+        cursor.execute("INSERT INTO Vagas (numero_vaga, ocupada) VALUES (?, ?)", (numero_vaga, 0))
+
+    conn.commit()
+    conn.close()
+
+# Rota para cadastrar uma nova placa
+@app.route('/cadastrar_placa', methods=['POST'])
+def cadastrar_placa():
+    data = request.json
+    placa = data.get('placa')
+
+    # Verifica se a placa está vazia ou não foi fornecida
+    if not placa:
+        return jsonify({'message': 'Placa não pode ser vazia!'}), 400
+
+    conn = sqlite3.connect('estacionamento.db')
+    cursor = conn.cursor()
+
+    # Verifica se ainda há vagas disponíveis
+    cursor.execute("SELECT COUNT(*) FROM Vagas WHERE ocupada = 0")
+    vagas_disponiveis = cursor.fetchone()[0]
+
+    if vagas_disponiveis > 0:
+        try:
+            # Captura a data e hora atual como a data de entrada
+            data_entrada = datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # Formato 'AAAA-MM-DD HH:MM:SS'
+
+            # Insere a nova placa com a data de entrada
+            cursor.execute("INSERT INTO Placas (placa, data_entrada) VALUES (?, ?)", (placa, data_entrada))
+
+            # Marca a primeira vaga desocupada como ocupada
+            cursor.execute(""" 
+                UPDATE Vagas 
+                SET ocupada = 1 
+                WHERE id = (SELECT id FROM Vagas WHERE ocupada = 0 LIMIT 1)
+            """)
+            conn.commit()
+            return jsonify({'message': 'Placa cadastrada com sucesso!'}), 201
+        except sqlite3.IntegrityError:
+            return jsonify({'message': 'Placa já cadastrada!'}), 409
+        finally:
+            conn.close()
+    else:
+        return jsonify({'message': 'Não há vagas disponíveis!'}), 400
+
+
+# Rota para verificar vagas não ocupadas
+@app.route('/vagas_disponiveis', methods=['GET'])
+def vagas_disponiveis():
+    conn = sqlite3.connect('estacionamento.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM Vagas WHERE ocupada = 0")
+    vagas_disponiveis = cursor.fetchone()[0]  # Obtém o número de vagas disponíveis
+    conn.close()
+    return jsonify(vagas_disponiveis)
+
+# Rota para consultar tempo de permanência e saldo
+@app.route('/tempo_e_saldo/<placa>', methods=['GET'])
+def tempo_e_saldo(placa):
+    conn = sqlite3.connect('estacionamento.db')
+    cursor = conn.cursor()
+    
+    # Consulta a data de entrada para a placa
+    cursor.execute("SELECT data_entrada FROM Placas WHERE placa = ?", (placa,))
+    resultado = cursor.fetchone()
+    
+    if resultado:
+        data_entrada = resultado[0]  # Obtém a data de entrada da placa
+        data_saida = datetime.now()  # Captura a hora atual como data de saída
+
+        # Cálculo do tempo de permanência
+        tempo_permanencia = data_saida - datetime.strptime(data_entrada, '%Y-%m-%d %H:%M:%S')
+
+        # Calcule o saldo aqui. Exemplo de cálculo:
+        saldo = calcular_saldo(tempo_permanencia)  # Substitua pelo seu cálculo de saldo
+
+        return jsonify({
+            'data_entrada': data_entrada,
+            'data_saida': data_saida.strftime('%Y-%m-%d %H:%M:%S'),  # Formata a data de saída
+            'saldo': saldo
+        }), 200
+    else:
+        return jsonify({'message': 'Placa não encontrada!'}), 404
+
+def calcular_saldo(tempo_permanencia):
+    # Aqui você implementa a lógica para calcular o saldo com base no tempo de permanência
+    # Exemplo simples: 5 reais por hora
+    return tempo_permanencia.total_seconds() / 3600 * 5  # Cálculo baseado em 5 reais por hora
+
+
+# Rota para consultar planos de fidelidade
+@app.route('/planos', methods=['GET'])
+def planos():
+    conn = sqlite3.connect('estacionamento.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Planos")
+    planos = cursor.fetchall()
+    conn.close()
+    return jsonify(planos)
+
+# Rota para consultar todas as placas
+@app.route('/placas', methods=['GET'])
 def consultar_placas():
-    try:
-        response = requests.get("http://127.0.0.1:5000/placas")  # Verifique a rota correta na API
-        if response.status_code == 200:
-            placas = response.json()
-            resultado_text.delete(1.0, tk.END)  # Limpa o conteúdo do Text antes de adicionar novos resultados
-            resultado_text.insert(tk.END, "\n".join(placas))  # Insere as placas no Text
-        else:
-            resultado_text.delete(1.0, tk.END)
-            resultado_text.insert(tk.END, "Erro: Não foi possível buscar as placas.")
-    except Exception as e:
-        resultado_text.delete(1.0, tk.END)
-        resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
-
-def cadastrar_placa(placa):
-    try:
-        response = requests.post("http://127.0.0.1:5000/cadastrar_placa", json={"placa": placa})
-        if response.status_code == 201:
-            resultado_text.delete(1.0, tk.END)
-            resultado_text.insert(tk.END, "Placa cadastrada com sucesso!")
-        else:
-            resultado_text.delete(1.0, tk.END)
-            resultado_text.insert(tk.END, "Erro: Não foi possível cadastrar a placa.")
-    except Exception as e:
-        resultado_text.delete(1.0, tk.END)
-        resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
-
-def consultar_vagas_disponiveis():
-    try:
-        response = requests.get("http://127.0.0.1:5000/vagas_disponiveis")
-        if response.status_code == 200:
-            vagas = response.json()
-            resultado_text.delete(1.0, tk.END)
-            resultado_text.insert(tk.END, str(vagas))
-        else:
-            resultado_text.delete(1.0, tk.END)
-            resultado_text.insert(tk.END, "Erro: Não foi possível buscar as vagas.")
-    except Exception as e:
-        resultado_text.delete(1.0, tk.END)
-        resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
-
-def consultar_permanencia_saldo(placa):
-    try:
-        response = requests.get(f"http://127.0.0.1:5000/tempo_e_saldo/{placa}")
-        if response.status_code == 200:
-            dados = response.json()
-            permanencia = dados.get("data_entrada")
-            permanencia1 = dados.get("data_saida")
-            saldo = dados.get("saldo")
-            resultado_text.delete(1.0, tk.END)
-            resultado_text.insert(tk.END, f"Hora de Entrada: {permanencia}\n Hora de saida: {permanencia1}\nSaldo: {saldo}")
-        else:
-            resultado_text.delete(1.0, tk.END)
-            resultado_text.insert(tk.END, "Erro: Não foi possível buscar os dados.")
-    except Exception as e:
-        resultado_text.delete(1.0, tk.END)
-        resultado_text.insert(tk.END, f"Erro de Conexão: {str(e)}")
-
-def consultar_planos_fidelidade():
-    planos = [
-        {"nome": "Estacionamento na Veia - Forte e vingador", "beneficios": "Acesso ilimitado, estacionamento reservado, descontos exclusivos", "requisitos": "Pagamento mensal de R$ 200,00"},
-        {"nome": "Estacionamento na Veia - Preto", "beneficios": "Acesso a vagas preferenciais, descontos em estacionamentos parceiros", "requisitos": "Pagamento mensal de R$ 120,00"},
-        {"nome": "Estacionamento na Veia - Prata", "beneficios": "Descontos em estacionamentos parceiros", "requisitos": "Pagamento mensal de R$ 60,00"}
-    ]
+    conn = sqlite3.connect('estacionamento.db')
+    cursor = conn.cursor()
     
-    planos_info = "\n".join([f"Plano: {p['nome']} - Benefícios: {p['beneficios']} - Requisitos: {p['requisitos']}" for p in planos])
+    # Seleciona todas as placas cadastradas
+    cursor.execute("SELECT placa FROM Placas")
+    placas = cursor.fetchall()
+    conn.close()
     
-    resultado_text.delete(1.0, tk.END)
-    resultado_text.insert(tk.END, planos_info)
+    # Retorna as placas em formato JSON
+    return jsonify([placa[0] for placa in placas])  # Retorna apenas a coluna "placa"
 
-# Configuração da interface principal com abas
-root = tk.Tk()
-root.title("Gerenciador do Estacionamento")
-root.geometry("600x400")  # Tamanho da janela ajustado
 
-notebook = ttk.Notebook(root)
-notebook.pack(expand=True, fill="both")
-
-# Aba para Consulta e Cadastro de Placas (História 1)
-frame_placas = ttk.Frame(notebook)
-notebook.add(frame_placas, text="Consulta e Cadastro de Placas")
-
-btn_consultar_placas = tk.Button(frame_placas, text="Consultar Placas", command=consultar_placas)
-btn_consultar_placas.pack(pady=10)
-
-tk.Label(frame_placas, text="Nova Placa:").pack(pady=5)
-entry_nova_placa = tk.Entry(frame_placas)
-entry_nova_placa.pack(pady=5)
-btn_cadastrar_placa = tk.Button(frame_placas, text="Cadastrar Placa", command=lambda: cadastrar_placa(entry_nova_placa.get()))
-btn_cadastrar_placa.pack(pady=10)
-
-# Aba para Consulta de Vagas Disponíveis (História 2)
-frame_vagas = ttk.Frame(notebook)
-notebook.add(frame_vagas, text="Consulta de Vagas")
-btn_consultar_vagas = tk.Button(frame_vagas, text="Consultar Vagas Disponíveis", command=consultar_vagas_disponiveis)
-btn_consultar_vagas.pack(pady=10)
-
-# Aba para Consulta de Tempo de Permanência e Saldo (História 3)
-frame_permanencia = ttk.Frame(notebook)
-notebook.add(frame_permanencia, text="Consulta de Permanência")
-lbl_placa = tk.Label(frame_permanencia, text="Número da Placa:")
-lbl_placa.pack(pady=5)
-entry_placa = tk.Entry(frame_permanencia)
-entry_placa.pack(pady=5)
-btn_consultar_permanencia = tk.Button(frame_permanencia, text="Consultar Permanência e Saldo", command=lambda: consultar_permanencia_saldo(entry_placa.get()))
-btn_consultar_permanencia.pack(pady=10)
-
-# Aba para Consulta de Planos de Fidelidade (História 4)
-frame_planos = ttk.Frame(notebook)
-notebook.add(frame_planos, text="Consulta de Planos")
-btn_consultar_planos = tk.Button(frame_planos, text="Consultar Planos de Fidelidade", command=consultar_planos_fidelidade)
-btn_consultar_planos.pack(pady=10)
-
-# Widget de texto com rolagem para exibir resultados
-resultado_text_frame = ttk.Frame(root)
-resultado_text_frame.pack(fill="both", expand=True, padx=10, pady=10)
-
-resultado_text = tk.Text(resultado_text_frame, wrap=tk.WORD, height=10)
-resultado_text.pack(expand=True, fill="both", padx=5, pady=5)
-
-scrollbar = tk.Scrollbar(resultado_text_frame, command=resultado_text.yview)
-scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-resultado_text.config(yscrollcommand=scrollbar.set)
-
-root.mainloop()
+if __name__ == '__main__':
+    inicializar_vagas()
+    app.run(debug=True)
