@@ -1,0 +1,27 @@
+name: Generate Mermaid Diagrams
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Generate Mermaid diagrams
+        uses: marketplace-actions/mermaid-cli-action@v1.0.0
+        with:
+          input: README.md
+          output: diagrams/
+
+      - name: Commit diagrams
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add diagrams/*
+          git commit -m "Generate Mermaid diagrams"
+          git push
